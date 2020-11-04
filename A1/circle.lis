@@ -1,0 +1,147 @@
+     1                                  ;******************************************************************************************************************************
+     2                                  ; California State University, Fullerton, hereby disclaims all copyright interest 
+     3                                  ;       in the program "Circumference of Circle"  (which calculates the circumference of a circle) 
+     4                                  ;       written by Patricia Ong.  
+     5                                  ;
+     6                                  ;
+     7                                  ;Name: Patricia Ong
+     8                                  ; Program name: Circumference of Circle
+     9                                  ;           A program that will compute the approximate circumference of a circle using only integers.
+    10                                  ;               Pi = 3.14 = 22/7 
+    11                                  ;               Circumference = 2 * pi (22/7) * radius
+    12                                  ; Class: CPSC 240-1
+    13                                  ;       For Submission.
+    14                                  ;******************************************************************************************************************************
+    15                                  
+    16                                  section .data
+    17                                  
+    18 00000000 546869732063697263-         welcome db "This circle function is brought to you by Patricia.", 10, 0
+    18 00000009 6C652066756E637469-
+    18 00000012 6F6E2069732062726F-
+    18 0000001B 7567687420746F2079-
+    18 00000024 6F7520627920506174-
+    18 0000002D 72696369612E0A00   
+    19 00000035 506C6561736520656E-         inputRadiusPrompt db "Please enter the radius of a circle in whole number of meters: ", 0
+    19 0000003E 746572207468652072-
+    19 00000047 6164697573206F6620-
+    19 00000050 6120636972636C6520-
+    19 00000059 696E2077686F6C6520-
+    19 00000062 6E756D626572206F66-
+    19 0000006B 206D65746572733A20-
+    19 00000074 00                 
+    20 00000075 546865206E756D6265-         receivedNumberFormat db "The number %ld was received.", 10, 0
+    20 0000007E 7220256C6420776173-
+    20 00000087 207265636569766564-
+    20 00000090 2E0A00             
+    21 00000093 546865206369726375-         resultFormat1 db "The circumference of a circle with this radius is %ld", 0
+    21 0000009C 6D666572656E636520-
+    21 000000A5 6F6620612063697263-
+    21 000000AE 6C6520776974682074-
+    21 000000B7 686973207261646975-
+    21 000000C0 7320697320256C6400 
+    22 000000C9 20616E6420256C642F-         resultFormat2 db " and %ld/7 meters.", 10, 0 
+    22 000000D2 37206D65746572732E-
+    22 000000DB 0A00               
+    23 000000DD 54686520696E746567-         returnFormat db "The integer part of the area will be returned to the main program. Please enjoy your circles.", 10, 0
+    23 000000E6 65722070617274206F-
+    23 000000EF 662074686520617265-
+    23 000000F8 612077696C6C206265-
+    23 00000101 2072657475726E6564-
+    23 0000010A 20746F20746865206D-
+    23 00000113 61696E2070726F6772-
+    23 0000011C 616D2E20506C656173-
+    23 00000125 6520656E6A6F792079-
+    23 0000012E 6F757220636972636C-
+    23 00000137 65732E0A00         
+    24                                  
+    25 0000013C 257300                      stringFormat db "%s", 0
+    26 0000013F 25640A00                    intFormat db "%d", 10, 0
+    27 00000143 256C6400                    longintFormat db "%ld", 0
+    28                                  
+    29                                   section .bss
+    30 00000000 <res 00000008>              qword1: resq 1                      ;resq 1 = reserve 1 quadword (For the integer)
+    31                                  
+    32                                  section .text 
+    33                                  
+    34                                      extern printf                       ;Calls printf library. For print output.
+    35                                      extern scanf                        ;Calls scanf library.  For input data.
+    36                                      global circle   
+    37                                  
+    38                                  circle:
+    39                                      
+    40                                      ;Align the stack
+    41 00000000 55                          push rbp                            ;Need for scanf -- The stack is originally not aligned.
+    42                                  
+    43                                      ;Print Welcome Message
+    44 00000001 48BF-                       mov rdi, stringFormat
+    44 00000003 [3C01000000000000] 
+    45 0000000B 48BE-                       mov rsi, welcome                    ;"This circle function is brought to you by Patricia."
+    45 0000000D [0000000000000000] 
+    46 00000015 B800000000                  mov rax, 0
+    47 0000001A E8(00000000)                call printf
+    48                                  
+    49                                      ;Print Input Prompt
+    50 0000001F 48BF-                       mov rdi, stringFormat
+    50 00000021 [3C01000000000000] 
+    51 00000029 48BE-                       mov rsi, inputRadiusPrompt          ;"Please enter the radius of a circle in whole number of meters: " 
+    51 0000002B [3500000000000000] 
+    52 00000033 4889C0                      mov rax, rax
+    53 00000036 E8(00000000)                call printf
+    54                                  
+    55                                      ;Get Input using scanf
+    56 0000003B 48BF-                       mov rdi, longintFormat      
+    56 0000003D [4301000000000000] 
+    57 00000045 48BE-                       mov rsi, qword1                     ;Copies value stored in rsi (inputRadiusPrompt) to qword1
+    57 00000047 [0000000000000000] 
+    58 0000004F B800000000                  mov rax, 0
+    59 00000054 E8(00000000)                call scanf
+    60                                  
+    61                                      ;Print Received number
+    62 00000059 48BF-                       mov rdi, receivedNumberFormat       ;"The number %ld was received." 
+    62 0000005B [7500000000000000] 
+    63 00000063 488B3425[00000000]          mov rsi, [qword1]                   ;qword1 is the address, [qword1] is the actual value. Moving actual value instead of address
+    64 0000006B B800000000                  mov rax, 0
+    65 00000070 E8(00000000)                call printf
+    66                                  
+    67                                      ;Multiply 44 (numerator) to input
+    68 00000075 488B0425[00000000]          mov rax, [qword1]
+    69 0000007D B92C000000                  mov rcx, 44                          
+    70 00000082 48F7E1                      mul rcx
+    71 00000085 4989C4                      mov r12, rax                        ;Storing the value into r12
+    72                                  
+    73                                      ;Divide multiple by 7 (denominator)
+    74 00000088 BA00000000                  mov rdx, 0
+    75 0000008D 4C89E0                      mov rax, r12                        ;Dividend
+    76 00000090 B907000000                  mov rcx, 7                          ;Divisor
+    77 00000095 48F7F9                      idiv rcx                            ;Divide operator
+    78 00000098 4989C4                      mov r12, rax                        ;Quotient in RAX
+    79 0000009B 4989D5                      mov r13, rdx                        ;Remainder in RDX
+    80                                  
+    81                                      ;Print resultFormat1
+    82 0000009E 48BF-                       mov rdi, resultFormat1              ;"The circumference of a circle with this radius is %ld"
+    82 000000A0 [9300000000000000] 
+    83 000000A8 4C89E6                      mov rsi, r12                        
+    84 000000AB B800000000                  mov rax, 0
+    85 000000B0 E8(00000000)                call printf
+    86                                  
+    87                                      ;Print resultFormat2
+    88 000000B5 48BF-                       mov rdi, resultFormat2              ;" and %ld/7 meters."
+    88 000000B7 [C900000000000000] 
+    89 000000BF 4C89EE                      mov rsi, r13
+    90 000000C2 B800000000                  mov rax, 0
+    91 000000C7 E8(00000000)                call printf
+    92                                  
+    93                                      ;Print returnFormat
+    94 000000CC 48BF-                       mov rdi, returnFormat               ;"The integer part of the area will be returned to the main program. Please enjoy your circles."
+    94 000000CE [DD00000000000000] 
+    95 000000D6 48BE-                       mov rsi, stringFormat
+    95 000000D8 [3C01000000000000] 
+    96 000000E0 B800000000                  mov rax, 0
+    97 000000E5 E8(00000000)                call printf
+    98                                  
+    99                                      ;Restore the Stack
+   100 000000EA 5D                          pop rbp                             ;Need for scanf
+   101                                  
+   102                                      ;Exit program with result code
+   103 000000EB 4C89E0                      mov rax, r12
+   104 000000EE C3                          ret
