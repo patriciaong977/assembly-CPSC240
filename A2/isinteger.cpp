@@ -38,13 +38,16 @@
 
 extern "C" bool isinteger(char w[]);
 bool isinteger(char w[])
-{bool result = true; //Assume true until proven otherwise.
- int start = 0;
- if (w[0] == '-' || w[0] == '+') start = 1;
- unsigned long int k = start;
- while( !(w[k]=='\0') && result )
-     {result = result && isdigit(w[k]);
-      k++;
-     }
- return result;
+{
+    bool result = true; //Assume true until proven otherwise.
+    int start = 0;
+    if (w[0] == '-' || w[0] == '+') start = 1;
+    unsigned long int k = start;
+    while( !(w[k]=='\0') && result )
+    {
+        result = result && isdigit(w[k]);
+        k++;
+    }
+
+    return result;
 }//End of isInteger
