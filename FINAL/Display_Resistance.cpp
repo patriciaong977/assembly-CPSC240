@@ -1,12 +1,19 @@
 //============================================================================================================
-//Program name: "Arrays". This program makes an assembly program that teaches the following:
-//              How to make an array, how to implement iteration, how to make professional looking programs,
-//              how to reject invalid inputs, etc.
-// File: input_array.asm
-// File Description: Displays the array to the user. 
+// Program name: Electricity Program
+//             
+// File: Display_Resistance
+// File Description: Displays the Resistance output.
+//                        
 // Author: Patricia Ong
+// CWID: 8874 19224
+// Section: 240-1
+
 // Email: patricia.ong977@csu.fullerton.edu
 // Institution: California State University, Fullerton.
+//
+// Link object file command: g++ -m64 -fno-pie -no-pie -o exe.out Electricity.o isfloat.o Display_Resistance.o 
+//  Input_Resistance.o Compute_Resistance.o read_clock.o Manager.o
+//
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 // General Public License version 3 as published by the Free Software Foundation.
 // This program is distributed in hope that it will be useful, but WITHOUT ANY WARRANTy; without even the 
@@ -17,16 +24,15 @@
 
 #include <stdio.h>
 
-extern "C" void display_array(double array[], long size);        
+extern "C" void Display_Resistance(double array[], long index);        
 
-void display_array(double array[], long int index)
+void Display_Resistance(double array[], long index)
 {
-
+    //For loop
     for (long i = 0; i < index; i++)
     {
-        printf("%ld", array[i]);
-        printf("%s", " ");
-    }
+        printf("%lf", array[i]);
+    } // End of for loop
 
     printf("\n");
 }
