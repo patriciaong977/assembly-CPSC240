@@ -1,5 +1,5 @@
 # Assembly-CPSC240
-Mini Projects from CPSC 240 - Computer Organization and Assembly Language
+Mini Projects Assignments from CPSC 240 - Computer Organization and Assembly Language
 
 Assignment 1: Circumference of Circle
   ###### Make a program that will:
